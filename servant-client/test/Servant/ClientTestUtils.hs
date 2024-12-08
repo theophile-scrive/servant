@@ -168,6 +168,8 @@ data MultipleChoicesIntResult
 
 instance GSOP.Generic MultipleChoicesIntResult
 
+-- The 'AsUnion' instance can also be written manually as such:
+--
 -- instance => AsUnion MultipleChoicesIntResponses MultipleChoicesIntResult where
 --   toUnion NegativeNumber = Z (I ())
 --   toUnion (Even b) = S (Z (I b))
