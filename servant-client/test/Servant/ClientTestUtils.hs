@@ -168,18 +168,6 @@ data MultipleChoicesIntResult
 
 instance GSOP.Generic MultipleChoicesIntResult
 
--- The 'AsUnion' instance can also be written manually as such:
---
--- instance => AsUnion MultipleChoicesIntResponses MultipleChoicesIntResult where
---   toUnion NegativeNumber = Z (I ())
---   toUnion (Even b) = S (Z (I b))
---   toUnion (Odd i) = S (S (Z (I i)))
---
---   fromUnion       (Z (I ())) = NegativeNumber
---   fromUnion    (S (Z (I b))) = Even b
---   fromUnion (S (S (Z (I i)))) = Odd i
---   fromUnion (S (S (S x))) = case x of {}
-
 -- This is our endpoint description
 type MultipleChoicesInt =
   Capture "int" Int
