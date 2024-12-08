@@ -116,7 +116,7 @@ library
   -- Types
   exposed-modules:
     Servant.Types.SourceT
-    Servant.Types.ResponseList
+    Servant.Types.Internal.ResponseList
 
   -- Test stuff
   exposed-modules: Servant.Test.ComprehensiveAPI

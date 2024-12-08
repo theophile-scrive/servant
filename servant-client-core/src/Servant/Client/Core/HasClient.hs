@@ -87,7 +87,7 @@ import           Servant.Client.Core.BasicAuth
 import           Servant.Client.Core.ClientError
 import           Servant.Client.Core.Request
 import           Servant.Client.Core.Response
-import           Servant.Client.Core.ResponseUnrender
+import           Servant.Client.Core.MultiVerb.ResponseUnrender
 import qualified Servant.Client.Core.Response as Response
 import           Servant.Client.Core.RunClient
 import           Servant.API.MultiVerb

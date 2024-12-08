@@ -1,5 +1,5 @@
 {-# LANGUAGE ApplicativeDo #-}
-module Servant.Client.Core.ResponseUnrender where
+module Servant.Client.Core.MultiVerb.ResponseUnrender where
 
 import Control.Applicative
 import Control.Monad
