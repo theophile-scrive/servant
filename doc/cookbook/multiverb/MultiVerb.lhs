@@ -177,7 +177,7 @@ Server: Warp/3.4.1
 Transfer-Encoding: chunked
 ```
 
-This is the end of t
+You have now learned how to use the MultiVerb feature of Servant.
 
 ## Annex 1: Implementing AsUnion manually
 
