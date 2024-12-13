@@ -287,7 +287,7 @@ type MultiVerb1 m cs a = MultiVerb m cs '[a] (ResponseType a)
 -- There, we derived the 'AsUnion' instance with the help of Generics. 
 -- The manual way of implementing the instance is:
 --
--- > instance Responses ~ res => AsUnion res Result where
+-- > instance AsUnion Responses Result where
 -- >   toUnion NegativeNumber = Z (I ())
 -- >   toUnion (Even b) = S (Z (I b))
 -- >   toUnion (Odd i) = S (S (Z (I i)))

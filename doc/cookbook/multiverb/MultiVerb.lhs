@@ -28,7 +28,6 @@ Let us create an endpoint that captures an 'Int' and has the following logic:
 * If the number is even, we return a 'Bool' in the response body;
 * If the number is odd, we return another 'Int' in the response body.
 
-
 Let us list all possible HTTP responses:
 ```haskell
 
@@ -39,7 +38,8 @@ type Responses =
    ]
 ```
 
-Let us create the return type:
+Let us create the return type. We will create a sum type that lists the values on the Haskell side that correspond to our HTTP responses.
+In order to tie the two types together, we will use a mechanism called `AsUnion` to create a correspondance between the two:
 
 ```haskell
 data Result
@@ -53,8 +53,7 @@ data Result
 instance GSOP.Generic Result
 ```
 
-These deriving statements above tie together the responses and the return values, and the order in which they are defined matters.
-For instance, if `Even` and `Odd` had switched places in the definition of `Result`, this would provoke an error:
+These deriving statements above tie together the responses and the return values, and the order in which they are defined matters. For instance, if `Even` and `Odd` had switched places in the definition of `Result`, this would provoke an error:
 
 ```
 • No instance for ‘AsConstructor
@@ -74,6 +73,30 @@ type MultipleChoicesInt =
     '[JSON]
     Responses
     Result
+```
+
+### Implementing AsUnion manually
+
+In the above example, the `AsUnion` typeclass is derived through the help of the `DerivingVia` mechanism,
+and the `GenericAsUnion` wrapper.
+
+If you would prefer implementing it yourself, you need to encode your responses as [Peano numbers](https://wiki.haskell.org/Peano_numbers),
+augmented with the `I`(identity) combinator.
+
+See how three options can be encoded as the Z (zero), S Z (successor to zero, so one),
+and S (S Z) (the sucessor to the successor to zero, so two). This encoding is static, so we know in advance how to decode them to
+Haskell datatypes. See the instance below for the encoding/decoding process:
+
+```
+instance AsUnion MultipleChoicesIntResponses MultipleChoicesIntResult where
+  toUnion NegativeNumber =       Z (I ())
+  toUnion (Even b)       =    S (Z (I b))
+  toUnion (Odd i)        = S (S (Z (I i)))
+
+  fromUnion       (Z (I ())) = NegativeNumber
+  fromUnion    (S (Z (I b))) = Even b
+  fromUnion (S (S (Z (I i)))) = Odd i
+  fromUnion (S (S (S x))) = case x of {}
 ```
 
 ## Integration in a routing table
